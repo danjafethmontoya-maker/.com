@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zada - Agencia de Diseño Web en Cali, Colombia</title>
+    <meta name="description" content="Transformamos tu negocio con soluciones digitales profesionales. Páginas web modernas y efectivas para empresas en Cali, Colombia.">
+    
+    <!-- ========================================
+         ESTILOS Y LIBRERÍAS EXTERNAS
+         ======================================== -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ========================================
+         CONFIGURACIÓN DE TAILWIND
+         ======================================== -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Colores principales de la marca
+                        primary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- ========================================
+         ESTILOS PERSONALIZADOS
+         ======================================== -->
+    <style>
+        /* Animaciones de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Animación del botón de WhatsApp */
+        @keyframes pulse-green {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 15px rgba(34, 197, 94, 0);
+            }
+        }
+        
+        .whatsapp-pulse {
+            animation: pulse-green 2s infinite;
+        }
+        
+        /* Estilo del carrusel de testimonios */
+        .testimonial-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header con efecto de scroll */
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Tarjeta de plan destacado */
+        .plan-destacado {
+            border: 2px solid #a855f7;
+            position: relative;
+        }
+        
+        .plan-destacado::before {
+            content: 'Recomendado';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-white text-gray-800 antialiased">
+
+    <!-- ========================================
+         NAVEGACIÓN PRINCIPAL
+         Incluye logo, enlaces y menú móvil
+         ======================================== -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#inicio" class="text-2xl font-bold text-primary-600">
+                    Zada
+                </a>
+                
+                <!-- Enlaces de navegación (Desktop) -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#inicio" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">Inicio</a>
+                    <a href="#nosotros" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">Nosotros</a>
+                    <a href="#planes" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">Planes</a>
+                    <a href="#testimonios" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">Testimonios</a>
+                    <a href="#contacto" class="bg-primary-600 text-white px-6 py-2.5 rounded-full hover:bg-primary-700 transition-colors font-medium">
+                        Contactar
+                    </a>
+                </div>
+                
+                <!-- Botón menú móvil -->
+                <button id="menu-toggle" class="md:hidden p-2 text-gray-600 hover:text-primary-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Menú móvil -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#inicio" class="text-gray-600 hover:text-primary-600 py-2 font-medium">Inicio</a>
+                    <a href="#nosotros" class="text-gray-600 hover:text-primary-600 py-2 font-medium">Nosotros</a>
+                    <a href="#planes" class="text-gray-600 hover:text-primary-600 py-2 font-medium">Planes</a>
+                    <a href="#testimonios" class="text-gray-600 hover:text-primary-600 py-2 font-medium">Testimonios</a>
+                    <a href="#contacto" class="bg-primary-600 text-white px-6 py-2.5 rounded-full text-center hover:bg-primary-700 transition-colors font-medium">
+                        Contactar
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================================
+         SECCIÓN HERO
+         Título principal, subtítulo y CTA
+         ======================================== -->
+    <section id="inicio" class="min-h-screen flex items-center pt-20 bg-gradient-to-br from-primary-50 via-white to-purple-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center max-w-4xl mx-auto fade-in">
+                <!-- Badge superior -->
+                <div class="inline-flex items-center bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Agencia de Diseño Web en Cali
+                </div>
+                
+                <!-- Título principal -->
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+                    Transformamos tu negocio con 
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-purple-600">
+                        soluciones digitales
+                    </span>
+                </h1>
+                
+                <!-- Subtítulo -->
+                <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    Creamos páginas web modernas y efectivas que impulsan el crecimiento de tu empresa. 
+                    Más de 50 negocios en Cali ya confían en nosotros.
+                </p>
+                
+                <!-- Botones de acción -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                    <a href="https://wa.me/TUNUMERO?text=Hola%20Zada,%20quiero%20más%20información%20sobre%20sus%20servicios" 
+                       target="_blank"
+                       class="bg-primary-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-700 transition-all hover:shadow-lg hover:shadow-primary-600/30 flex items-center">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i>
+                        Empezar ahora
+                    </a>
+                    <a href="#planes" class="text-primary-600 font-semibold flex items-center hover:text-primary-700 transition-colors">
+                        Ver planes
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- Estadísticas -->
+                <div class="grid grid-cols-3 gap-8 max-w-lg mx-auto">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-primary-600">50+</div>
+                        <div class="text-sm text-gray-500">Clientes felices</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-primary-600">100%</div>
+                        <div class="text-sm text-gray-500">Satisfacción</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-primary-600">3+</div>
+                        <div class="text-sm text-gray-500">Años de experiencia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECCIÓN SOBRE NOSOTROS
+         Características y beneficios de la agencia
+         ======================================== -->
+    <section id="nosotros" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Encabezado de sección -->
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                    ¿Por qué elegirnos?
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Somos una agencia especializada en digitalizar negocios locales en Cali, Colombia.
+                </p>
+            </div>
+            
+            <!-- Grid de características -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Característica 1: Diseño Moderno -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100 fade-in">
+                    <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Diseño Moderno</h3>
+                    <p class="text-gray-600">
+                        Interfaces atractivas y profesionales que capturan la esencia de tu marca.
+                    </p>
+                </div>
+                
+                <!-- Característica 2: Optimizado para Móviles -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100 fade-in">
+                    <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-mobile-alt text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">100% Responsivo</h3>
+                    <p class="text-gray-600">
+                        Tu página se verá perfecta en celulares, tablets y computadores.
+                    </p>
+                </div>
+                
+                <!-- Característica 3: Velocidad -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100 fade-in">
+                    <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Super Rápido</h3>
+                    <p class="text-gray-600">
+                        Sitios web optimizados que cargan en segundos para no perder clientes.
+                    </p>
+                </div>
+                
+                <!-- Característica 4: Soporte -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100 fade-in">
+                    <div class="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-headset text-2xl text-primary-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Soporte 24/7</h3>
+                    <p class="text-gray-600">
+                        Siempre disponibles para ayudarte con cualquier duda o actualización.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECCIÓN DE PLANES Y PRECIOS
+         Tarjetas comparativas de planes
+         ======================================== -->
+    <section id="planes" class="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Encabezado de sección -->
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                    Planes a tu medida
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Elige el plan que mejor se adapte a las necesidades de tu negocio.
+                </p>
+            </div>
+            
+            <!-- Grid de planes -->
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                
+                <!-- PLAN BÁSICO -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 fade-in">
+                    <!-- Encabezado del plan -->
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Plan Básico</h3>
+                        <p class="text-gray-500 mb-4">Ideal para empezar tu presencia digital</p>
+                        <div class="flex items-baseline justify-center">
+                            <span class="text-4xl font-extrabold text-gray-900">$350.000</span>
+                            <span class="text-gray-500 ml-2">COP</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Pago único</p>
+                    </div>
+                    
+                    <!-- Lista de características con iconos FontAwesome -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Página web de una sola página (One Page)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Diseño responsive (móvil y escritorio)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Formulario de contacto funcional</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Integración con WhatsApp Business</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Optimización SEO básica</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Entrega en 5-7 días hábiles</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">1 revisión incluida</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Botón de acción -->
+                    <a href="https://wa.me/TUNUMERO?text=Hola%20Zada,%20me%20interesa%20el%20Plan%20Básico%20de%20$350.000" 
+                       target="_blank"
+                       class="block w-full bg-gray-900 text-white text-center py-4 rounded-xl font-semibold hover:bg-gray-800 transition-colors">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        Solicitar Plan Básico
+                    </a>
+                </div>
+                
+                <!-- PLAN INTERMEDIO (Destacado) -->
+                <div class="bg-white p-8 rounded-2xl shadow-xl plan-destacado fade-in">
+                    <!-- Encabezado del plan -->
+                    <div class="text-center mb-8 pt-2">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Plan Intermedio</h3>
+                        <p class="text-gray-500 mb-4">Para negocios que quieren destacar</p>
+                        <div class="flex items-baseline justify-center">
+                            <span class="text-4xl font-extrabold text-primary-600">$600.000</span>
+                            <span class="text-gray-500 ml-2">COP</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Pago único</p>
+                    </div>
+                    
+                    <!-- Lista de características con iconos FontAwesome -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Página web de hasta 5 secciones</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Diseño responsive premium</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Formulario de contacto avanzado</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Integración con WhatsApp Business</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Integración con redes sociales</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Optimización SEO avanzada</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Google Analytics configurado</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Entrega en 7-10 días hábiles</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">3 revisiones incluidas</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">Soporte por 30 días</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Botón de acción -->
+                    <a href="https://wa.me/TUNUMERO?text=Hola%20Zada,%20me%20interesa%20el%20Plan%20Intermedio%20de%20$600.000" 
+                       target="_blank"
+                       class="block w-full bg-gradient-to-r from-primary-600 to-purple-600 text-white text-center py-4 rounded-xl font-semibold hover:from-primary-700 hover:to-purple-700 transition-all shadow-lg shadow-primary-600/30">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        Solicitar Plan Intermedio
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Nota adicional -->
+            <p class="text-center text-gray-500 mt-8 fade-in">
+                <i class="fas fa-info-circle mr-1"></i>
+                ¿Necesitas algo más personalizado? 
+                <a href="https://wa.me/TUNUMERO?text=Hola%20Zada,%20necesito%20un%20plan%20personalizado" 
+                   target="_blank" 
+                   class="text-primary-600 hover:underline font-medium">
+                    Contáctanos
+                </a>
+            </p>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECCIÓN DE TESTIMONIOS
+         Carrusel con opiniones de clientes
+         ======================================== -->
+    <section id="testimonios" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Encabezado de sección -->
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                    Lo que dicen nuestros clientes
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Historias de éxito de negocios que confiaron en nosotros.
+                </p>
+            </div>
+            
+            <!-- Contenedor del carrusel -->
+            <div class="relative overflow-hidden" id="testimonial-carousel">
+                <div class="flex transition-transform duration-500 ease-in-out" id="testimonial-track">
+                    
+                    <!-- Testimonio 1 -->
+                    <div class="w-full md:w-1/3 flex-shrink-0 px-4">
+                        <div class="testimonial-card bg-gray-50 p-8 rounded-2xl h-full">
+                            <!-- Estrellas -->
+                            <div class="flex text-yellow-400 mb-4">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <!-- Texto del testimonio -->
+                            <p class="text-gray-600 mb-6 italic">
+                                "Zada transformó completamente la imagen de mi negocio. Ahora recibo el doble de 
+                                clientes gracias a mi nueva página web. ¡Súper recomendados!"
+                            </p>
+                            <!-- Información del cliente -->
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-primary-200 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-primary-700 font-bold">MC</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">María Camila Rodríguez</p>
+                                    <p class="text-sm text-gray-500">Dueña de Salón de Belleza, Cali</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonio 2 -->
+                    <div class="w-full md:w-1/3 flex-shrink-0 px-4">
+                        <div class="testimonial-card bg-gray-50 p-8 rounded-2xl h-full">
+                            <!-- Estrellas -->
+                            <div class="flex text-yellow-400 mb-4">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <!-- Texto del testimonio -->
+                            <p class="text-gray-600 mb-6 italic">
+                                "Excelente trabajo y muy profesionales. Entendieron exactamente lo que necesitaba 
+                                para mi restaurante. El proceso fue rápido y el resultado superó mis expectativas."
+                            </p>
+                            <!-- Información del cliente -->
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-primary-200 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-primary-700 font-bold">JA</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Juan Andrés Martínez</p>
+                                    <p class="text-sm text-gray-500">Propietario de Restaurante, Cali</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonio 3 -->
+                    <div class="w-full md:w-1/3 flex-shrink-0 px-4">
+                        <div class="testimonial-card bg-gray-50 p-8 rounded-2xl h-full">
+                            <!-- Estrellas -->
+                            <div class="flex text-yellow-400 mb-4">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <!-- Texto del testimonio -->
+                            <p class="text-gray-600 mb-6 italic">
+                                "La mejor inversión que he hecho para mi negocio. En solo una semana tenía mi 
+                                página lista y ya estoy recibiendo consultas de nuevos clientes. ¡Gracias Zada!"
+                            </p>
+                            <!-- Información del cliente -->
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-primary-200 rounded-full flex items-center justify-center mr-4">
+                                    <span class="text-primary-700 font-bold">LP</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">Laura Patricia Gómez</p>
+                                    <p class="text-sm text-gray-500">Consultora de Negocios, Cali</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Indicadores del carrusel -->
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-primary-600" data-index="0"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300" data-index="1"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECCIÓN DE CONTACTO / CTA FINAL
+         Llamada a la acción antes del footer
+         ======================================== -->
+    <section class="py-24 bg-gradient-to-r from-primary-600 to-purple-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
+                ¿Listo para digitalizar tu negocio?
+            </h2>
+            <p class="text-xl text-primary-100 mb-10 max-w-2xl mx-auto">
+                Da el primer paso hacia el éxito digital. Contáctanos hoy y recibe una 
+                asesoría gratuita para tu proyecto.
+            </p>
+            <a href="https://wa.me/TUNUMERO?text=Hola%20Zada,%20quiero%20una%20asesoría%20gratuita%20para%20mi%20negocio" 
+               target="_blank"
+               class="inline-flex items-center bg-white text-primary-600 px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all hover:shadow-xl">
+                <i class="fab fa-whatsapp mr-3 text-2xl"></i>
+                Solicitar asesoría gratuita
+            </a>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+         Información de contacto y enlaces
+         ======================================== -->
+    <footer id="contacto" class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12">
+                
+                <!-- Columna 1: Logo y descripción -->
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">Zada</h3>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Somos una agencia de diseño web especializada en ayudar a negocios 
+                        locales en Cali, Colombia a tener presencia digital profesional.
+                    </p>
+                    <!-- Redes sociales -->
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-primary-600 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-primary-600 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-primary-600 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Columna 2: Enlaces rápidos -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Enlaces</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#inicio" class="text-gray-400 hover:text-white transition-colors">Inicio</a></li>
+                        <li><a href="#nosotros" class="text-gray-400 hover:text-white transition-colors">Nosotros</a></li>
+                        <li><a href="#planes" class="text-gray-400 hover:text-white transition-colors">Planes</a></li>
+                        <li><a href="#testimonios" class="text-gray-400 hover:text-white transition-colors">Testimonios</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Columna 3: Contacto -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-envelope mr-3 text-primary-500"></i>
+                            contacto@zada.com.co
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fab fa-whatsapp mr-3 text-primary-500"></i>
+                            +57 XXX XXX XXXX
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-map-marker-alt mr-3 text-primary-500"></i>
+                            Cali, Colombia
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Línea divisoria y copyright -->
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 Zada. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================
+         BOTÓN FLOTANTE DE WHATSAPP
+         Siempre visible en la esquina inferior derecha
+         ======================================== -->
+    <a href="https://wa.me/TUNUMERO?text=Hola%20Zada,%20quiero%20más%20información" 
+       target="_blank"
+       id="whatsapp-btn"
+       class="fixed bottom-6 right-6 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-green-600 transition-all hover:scale-110 whatsapp-pulse z-50">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- ========================================
+         SCRIPTS DE JAVASCRIPT
+         Funcionalidades interactivas
+         ======================================== -->
+    <script>
+        // ========================================
+        // MENÚ MÓVIL - Abrir/Cerrar
+        // ========================================
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Cambiar icono de hamburguesa a X
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // ========================================
+        // HEADER - Efecto de scroll
+        // ========================================
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // ========================================
+        // ANIMACIONES - Fade in al hacer scroll
+        // ========================================
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        // Observar todos los elementos con clase fade-in
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ========================================
+        // CARRUSEL DE TESTIMONIOS
+        // Funcionalidad de auto-slide y controles
+        // ========================================
+        const track = document.getElementById('testimonial-track');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentSlide = 0;
+        let slidesToShow = window.innerWidth >= 768 ? 3 : 1;
+        let totalSlides = 3;
+        let autoplayInterval;
+        
+        // Función para actualizar el carrusel
+        function updateCarousel() {
+            // En móvil, mostrar 1 slide a la vez
+            if (window.innerWidth < 768) {
+                const slideWidth = 100;
+                track.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+            } else {
+                // En desktop, no mover porque se ven los 3
+                track.style.transform = 'translateX(0)';
+            }
+            
+            // Actualizar indicadores
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.remove('bg-gray-300');
+                    dot.classList.add('bg-primary-600');
+                } else {
+                    dot.classList.remove('bg-primary-600');
+                    dot.classList.add('bg-gray-300');
+                }
+            });
+        }
+        
+        // Función para avanzar al siguiente slide
+        function nextSlide() {
+            if (window.innerWidth < 768) {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }
+        }
+        
+        // Click en indicadores
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+                resetAutoplay();
+            });
+        });
+        
+        // Autoplay del carrusel
+        function startAutoplay() {
+            autoplayInterval = setInterval(nextSlide, 4000);
+        }
+        
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            startAutoplay();
+        }
+        
+        // Iniciar autoplay
+        startAutoplay();
+        
+        // Actualizar al cambiar tamaño de ventana
+        window.addEventListener('resize', () => {
+            slidesToShow = window.innerWidth >= 768 ? 3 : 1;
+            updateCarousel();
+        });
+
+        // ========================================
+        // SCROLL SUAVE - Para enlaces internos
+        // ========================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
